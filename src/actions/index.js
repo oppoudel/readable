@@ -1,14 +1,16 @@
 import { v4 } from 'node-uuid'
 import constants from '../utils/constants'
 
-export const addPost = ({ title, body, owner, category }) => ({
+export const addPost = (title, body, owner, category) => ({
   type: constants.ADD_POST,
-  id: v4(),
-  timestamp: Date.now(),
-  title,
-  body,
-  owner,
-  category
+  payload: {
+    id: v4(),
+    timestamp: Date.now(),
+    title,
+    body,
+    owner,
+    category
+  }
 })
 
 export const deletePost = id => ({
@@ -16,7 +18,7 @@ export const deletePost = id => ({
   id
 })
 
-export const addComment = ({ parentId, body, owner }) => ({
+export const addComment = (parentId, body, owner) => ({
   type: constants.ADD_COMMENT,
   id: v4(),
   timestamp: Date.now(),

@@ -1,28 +1,21 @@
-import React, { Component } from 'react'
-import { connect, provider } from 'react-redux'
-import 'bulma/css/bulma.css'
-import * as BlogsApi from './utils/api'
-import Posts from './components/posts'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
-class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      categories: null,
-      posts: null
-    }
-  }
-  componentWillMount() {
-    BlogsApi.getAllCategories().then(categories => this.setState({ categories }))
-    BlogsApi.getAllPosts().then(posts => this.setState({ posts }))
-  }
-  render() {
-    return (
-      <div className="container">
-        <Posts />
-      </div>
-    )
+import * as actions from './actions'
+import Main from './components/Main'
+
+function mapStateToProps(state) {
+  return {
+    posts: state.posts,
+    comments: state.comments,
+    categories: state.categories
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(actions, dispatch)
+}
+
+const App = connect(mapStateToProps, mapDispatchToProps)(Main)
 
 export default App
